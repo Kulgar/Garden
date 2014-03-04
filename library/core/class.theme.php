@@ -112,7 +112,7 @@ class Gdn_Theme {
          case 'profile':
             TouchValue('Permissions', $Options, 'Garden.SignIn.Allow');
             if (!$Text && $Session->IsValid())
-               $Text = $Session->User->Name;
+               $Text = $Session->User->FirstName;
             if ($Session->IsValid() && $Session->User->CountNotifications) {
                $Class = trim($Class.' HasCount');
                $Text .= ' <span class="Alert">'.$Session->User->CountNotifications.'</span>';
@@ -131,7 +131,7 @@ class Gdn_Theme {
             if (!$Text && $Session->IsValid()) {
                $IsFullPath = strtolower(substr($Session->User->Photo, 0, 7)) == 'http://' || strtolower(substr($Session->User->Photo, 0, 8)) == 'https://';
                $PhotoUrl = ($IsFullPath) ? $Session->User->Photo : Gdn_Upload::Url(ChangeBasename($Session->User->Photo, 'n%s'));
-               $Text = Img($PhotoUrl, array('alt' => htmlspecialchars($Session->User->Name)));
+               $Text = Img($PhotoUrl, array('alt' => htmlspecialchars($Session->User->FirstName)));
             }
 
             break;

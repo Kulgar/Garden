@@ -88,7 +88,7 @@ class BLTIConnectPlugin extends Gdn_Plugin {
    
    
    /*
-   * guarda la configuración que hay en la pantalla de configuracion del BLTIAutenticatior en disco */
+   * guarda la configuraciï¿½n que hay en la pantalla de configuracion del BLTIAutenticatior en disco */
   /* 
    public function Controller_Index($Sender) {
    	
@@ -174,7 +174,7 @@ class BLTIConnectPlugin extends Gdn_Plugin {
       } else {
          if ($RealUserID) {
             // The user is already signed in. Send them to the default page.
-            //no debería entrar por aquí
+            //no deberï¿½a entrar por aquï¿½
          	Redirect($foroUrl, 302);
          } else {
   
@@ -210,12 +210,12 @@ class BLTIConnectPlugin extends Gdn_Plugin {
             	//cogemos como target el resource_link_title
             	$entryTitle=$context->getResourceTitle();
    	            $givenEntryId=$context->info['resource_link_id'];
-                $discussId=$this->createDiscussionIfNecessary($UserKey,$categId,$entryTitle,$givenEntryId);
+                //$discussId=$this->createDiscussionIfNecessary($UserKey,$categId,$entryTitle,$givenEntryId);
                 //$foroUrl=$foroUrl.'&Target='.$entryTitle;
                 //$foroUrl=$foroUrl.'&Target='.'discussion%2F2%2Fpaso-de-informacion';
                 //$foroUrl=$foroUrl.'&p=/discussion/'.$discussId.'/'.Gdn_Format::Url($entryTitle);
-                $foroUrl='/discussion/'.$discussId.'/'.Gdn_Format::Url($entryTitle);
-                	
+                //$foroUrl='/discussion/'.$discussId.'/'.Gdn_Format::Url($entryTitle);
+                	$foroUrl='/discussions';
                 }
                 Redirect($foroUrl, 302);
             }
@@ -538,7 +538,7 @@ class BLTIConnectPlugin extends Gdn_Plugin {
 	   if (!in_array($role,$rolesUpdated))
 	   {
 	   
-		   // añadir el nuevo
+		   // aï¿½adir el nuevo
 		   $rolesUpdated[]=$role;
 	   
 		   //quitar repetidos
@@ -561,6 +561,7 @@ class BLTIConnectPlugin extends Gdn_Plugin {
 	   $UserData['Name'] = $bltiContext->getUserKey();
 	   $UserData['Password'] = rand();  //se requiere password para crear el usuario
 	   $UserData['Email'] = $bltiContext->getUserEmail();
+	   $UserData['FirstName'] = $bltiContext->getUserName();
 	   $tmpGender=strtolower($bltiContext->info['custom_user_gender']);
 	   $UserData['Gender'] = $tmpGender?$tmpGender:"m";
 	   $UserData['HourOffset'] = "0";

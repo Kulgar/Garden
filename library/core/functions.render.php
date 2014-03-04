@@ -207,8 +207,8 @@ if (!function_exists('UserPhoto')) {
             $PhotoUrl = $Photo;
          }
          $Href = Url(UserUrl($User));
-         return '<a title="'.htmlspecialchars($User->Name).'" href="'.$Href.'"'.$LinkClass.'>'
-            .Img($PhotoUrl, array('alt' => htmlspecialchars($User->Name), 'class' => $ImgClass))
+         return '<a title="'.htmlspecialchars($User->FirstName).'" href="'.$Href.'"'.$LinkClass.'>'
+            .Img($PhotoUrl, array('alt' => htmlspecialchars($User->FirstName), 'class' => $ImgClass))
             .'</a>';
       } else {
          return '';

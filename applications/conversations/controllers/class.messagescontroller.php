@@ -331,7 +331,7 @@ class MessagesController extends ConversationsController {
             continue;
          }
          if($User->Deleted) {
-            $Users[] = Wrap(UserAnchor($User), 'del', array('title' => sprintf(T('%s has left this conversation.'), htmlspecialchars($User->Name))));
+            $Users[] = Wrap(UserAnchor($User), 'del', array('title' => sprintf(T('%s has left this conversation.'), htmlspecialchars($User->FirstName))));
             $this->SetData('_HasDeletedUsers', TRUE);
          } else
             $Users[] = UserAnchor($User);

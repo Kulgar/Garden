@@ -2,7 +2,7 @@
 $Session = Gdn::Session();
 ?>
 <div class="User">
-   <h1><?php echo $this->User->Name; ?></h1>
+   <h1><?php echo $this->User->FirstName; ?></h1>
    <?php
    if ($this->User->Admin == 2) {
       echo '<div class="Info">', T('This is a system account and does not represent a real person.'), '</div>';

@@ -57,6 +57,7 @@ $PhotoExists = $Construct->ColumnExists('Photo');
 $Construct
 	->PrimaryKey('UserID')
    ->Column('Name', 'varchar(50)', FALSE, 'key')
+   ->Column('FirstName', 'varchar(50)')
    ->Column('Password', 'varbinary(100)') // keep this longer because of some imports.
 	->Column('HashMethod', 'varchar(10)', TRUE)
    ->Column('Photo', 'varchar(255)', NULL)

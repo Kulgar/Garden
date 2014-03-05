@@ -224,12 +224,18 @@ class BLTI {
         $givenname = $this->info['lis_person_name_given'];
         $familyname = $this->info['lis_person_name_family'];
         $fullname = $this->info['lis_person_name_full'];
+        if ( strlen($givenname) > 0 ) return $givenname;
         if ( strlen($fullname) > 0 ) return $fullname;
         if ( strlen($familyname) > 0 and strlen($givenname) > 0 ) return $givenname + $familyname;
-        if ( strlen($givenname) > 0 ) return $givenname;
         if ( strlen($familyname) > 0 ) return $familyname;
         return $this->getUserEmail();
     }
+	
+	function getUrlFormattedUserName(){
+		$formattedname = $this->info['lis_person_name_formatted'];
+		if ( strlen($formattedname) > 0 ) return $formattedname;
+		return $this->getUserEmail();
+	}
 
     function getUserKey() {
         $oauth = $this->info['oauth_consumer_key'];
@@ -294,6 +300,8 @@ class BLTI {
             $location = $this->addSession($location);
             header("Location: $location");
     }
+	
+	
 
     function dump() { 
         if ( ! $this->valid or $this->info == false ) return "Context not valid\n";

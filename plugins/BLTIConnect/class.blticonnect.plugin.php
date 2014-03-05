@@ -479,7 +479,9 @@ class BLTIConnectPlugin extends Gdn_Plugin {
    function updateUserInformation($userid,$bltiContext)
    {
    	   $UserData['UserID']=$userid;
-	   $UserData['Name'] = $bltiContext->getUserKey();
+	   $UserData['Name'] = $bltiContext->getUrlFormattedUserName(); //$bltiContext->getUserKey();
+	   $UserData['FirstName'] = $bltiContext->getUserName();
+	   $UserData['LtiID'] = $bltiContext->getUserKey();
 	   $UserData['Password'] = rand();  //se requiere password para crear el usuario
 	   $UserData['Email'] = $bltiContext->getUserEmail();
 
@@ -558,7 +560,8 @@ class BLTIConnectPlugin extends Gdn_Plugin {
    
    function createUser($bltiContext)
    {
-	   $UserData['Name'] = $bltiContext->getUserKey();
+	   $UserData['Name'] = $bltiContext->getUrlFormattedUserName(); //$bltiContext->getUserKey();
+	   $UserData['LtiID'] = $bltiContext->getUserKey();
 	   $UserData['Password'] = rand();  //se requiere password para crear el usuario
 	   $UserData['Email'] = $bltiContext->getUserEmail();
 	   $UserData['FirstName'] = $bltiContext->getUserName();
@@ -639,6 +642,11 @@ class BLTIConnectPlugin extends Gdn_Plugin {
         ->Table('Discussion')
         ->Column('PlatformDiscussionID','varchar(30)',NULL)
         ->Set();
+		
+		Gdn::Structure()
+		->Table('User')
+		->Column('LtiID','varchar(100)',NULL)
+		->Set();
      /*
    	 $NumLookupMethods = 0;
 		
@@ -667,7 +675,7 @@ class BLTIConnectPlugin extends Gdn_Plugin {
          'key',
          microtime(true),
          RandomString(16),
-         Gdn::Session()->User->Name
+         Gdn::Session()->User->LtiID
       )));
       
       $Secret = 's'.sha1(implode('.',array(
@@ -675,7 +683,7 @@ class BLTIConnectPlugin extends Gdn_Plugin {
          'secret',
          md5(microtime(true)),
          RandomString(16),
-         Gdn::Session()->User->Name
+         Gdn::Session()->User->LtiID
       )));
       
       $ProviderModel = new Gdn_AuthenticationProviderModel();
@@ -752,7 +760,7 @@ class BLTIConnectPlugin extends Gdn_Plugin {
          throw new Exception('The email or id is required');
 
 		try {
-			$Sender->SQL->Select('UserID, Name, Attributes, Admin, Password, HashMethod, Deleted, Banned')
+			$Sender->SQL->Select('UserID, LtiID, Attributes, Admin, Password, HashMethod, Deleted, Banned')
 				->From('User');
 	
 			if ($ID) {
@@ -761,7 +769,7 @@ class BLTIConnectPlugin extends Gdn_Plugin {
 				if (strpos($Email, '@') > 0) {
 					$Sender->SQL->Where('Email', $Email);
 				} else {
-					$Sender->SQL->Where('Name', $Email);
+					$Sender->SQL->Where('LtiID', $Email);
 				}
 			}
 	
@@ -770,7 +778,7 @@ class BLTIConnectPlugin extends Gdn_Plugin {
          $Sender->SQL->Reset();
          
 			// Try getting the user information without the new fields.
-			$Sender->SQL->Select('UserID, Name, Attributes, Admin, Password')
+			$Sender->SQL->Select('UserID, LtiID, Attributes, Admin, Password')
 				->From('User');
 	
 			if ($ID) {
@@ -779,7 +787,7 @@ class BLTIConnectPlugin extends Gdn_Plugin {
 				if (strpos($Email, '@') > 0) {
 					$Sender->SQL->Where('Email', $Email);
 				} else {
-					$Sender->SQL->Where('Name', $Email);
+					$Sender->SQL->Where('LtiID', $Email);
 				}
 			}
 	
